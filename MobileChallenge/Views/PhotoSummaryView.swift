@@ -12,6 +12,7 @@ struct PhotoSummaryView: View {
     
     let photo: Photo
     let imageHeight: CGFloat = 200
+    let iconHeight: CGFloat = 48
     
     // MARK: Body
     
@@ -26,13 +27,39 @@ struct PhotoSummaryView: View {
                         .frame(height: imageHeight)
                         .cornerRadius(10)
                 } else if phase.error != nil {
-                    Text("There was an error loading the image.")
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: imageHeight)
+                        .cornerRadius(10)
                 } else {
                     ProgressView()
+                        .frame(maxWidth: .infinity)
                         .frame(height: imageHeight)
                 }
             }
-            Text(photo.title)
+            HStack {
+                AsyncImage(url: photo.userIcon) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: iconHeight, height: iconHeight)
+                            .cornerRadius(iconHeight / 2)
+                    } else if phase.error != nil {
+                        Image(systemName: "person")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: iconHeight, height: iconHeight)
+                            .cornerRadius(iconHeight / 2)
+                    } else {
+                        ProgressView()
+                            .frame(width: iconHeight, height: iconHeight)
+                    }
+                }
+                Text(photo.ownerName ?? photo.ownerID.description)
+            }
         }
     }
 }
