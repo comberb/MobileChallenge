@@ -13,6 +13,7 @@ struct PhotoSummaryView: View {
     let photo: Photo
     let imageHeight: CGFloat = 200
     let iconHeight: CGFloat = 48
+    let showUserInfo: Bool
     
     // MARK: Body
     
@@ -39,26 +40,32 @@ struct PhotoSummaryView: View {
                         .frame(height: imageHeight)
                 }
             }
-            HStack {
-                AsyncImage(url: photo.userIcon) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: iconHeight, height: iconHeight)
-                            .cornerRadius(iconHeight / 2)
-                    } else if phase.error != nil {
-                        Image(systemName: "person")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: iconHeight, height: iconHeight)
-                            .cornerRadius(iconHeight / 2)
-                    } else {
-                        ProgressView()
-                            .frame(width: iconHeight, height: iconHeight)
+            if showUserInfo {
+                HStack {
+                    AsyncImage(url: photo.userIcon) { phase in
+                        if let image = phase.image {
+                            NavigationLink {
+                                UserPhotosView(networkingManager: FlickrManager(), userID: photo.ownerID, username: photo.ownerName ?? "User photos")
+                            } label: {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: iconHeight, height: iconHeight)
+                                    .cornerRadius(iconHeight / 2)
+                            }
+                        } else if phase.error != nil {
+                            Image(systemName: "person")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: iconHeight, height: iconHeight)
+                                .cornerRadius(iconHeight / 2)
+                        } else {
+                            ProgressView()
+                                .frame(width: iconHeight, height: iconHeight)
+                        }
                     }
+                    Text(photo.ownerName ?? photo.ownerID.description)
                 }
-                Text(photo.ownerName ?? photo.ownerID.description)
             }
         }
     }
