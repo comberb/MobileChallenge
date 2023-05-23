@@ -14,20 +14,6 @@ struct FlickrURLHelper {
     
     // MARK: Methods
     
-    func getSearchUserURL(userID: String, page: Int) -> URL? {
-        var components = getSearchURLComponents(page: page)
-        components.queryItems?.append(.init(name: "user_id", value: userID))
-        
-        return components.url
-    }
-    
-    func getSearchTermURL(text: String, page: Int) -> URL? {
-        var components = getSearchURLComponents(page: page)
-        components.queryItems?.append(.init(name: "text", value: text))
-        
-        return components.url
-    }
-    
     private func getSearchURLComponents(page: Int) -> URLComponents {
         var components = getBaseURL()
         components.queryItems?.append(.init(name: "method", value: "flickr.photos.search"))
@@ -51,5 +37,21 @@ struct FlickrURLHelper {
         components.queryItems?.append(.init(name: "nojsoncallback", value: "1"))
         
         return components
+    }
+}
+
+extension FlickrURLHelper: FlickrURLBuilding {
+    func getSearchUserURL(userID: String, page: Int) -> URL? {
+        var components = getSearchURLComponents(page: page)
+        components.queryItems?.append(.init(name: "user_id", value: userID))
+        
+        return components.url
+    }
+    
+    func getSearchTermURL(text: String, page: Int) -> URL? {
+        var components = getSearchURLComponents(page: page)
+        components.queryItems?.append(.init(name: "text", value: text))
+        
+        return components.url
     }
 }
