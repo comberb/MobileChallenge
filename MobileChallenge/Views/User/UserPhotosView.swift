@@ -22,8 +22,12 @@ struct UserPhotosView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(photos) { photo in
-                        PhotoSummaryView(photo: photo, showUserInfo: false)
-                            .padding()
+                        NavigationLink {
+                            PhotoDetailView(photo: photo)
+                        } label: {
+                            PhotoSummaryView(photo: photo, showUserInfo: false)
+                                .padding()
+                        }
                     }
                 }
                 .listRowSeparator(.visible)
