@@ -26,14 +26,14 @@ struct PhotoSummaryView: View {
                         .scaledToFill()
                         .frame(maxWidth: .infinity)
                         .frame(height: imageHeight)
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                 } else if phase.error != nil {
                     Image(systemName: "photo")
                         .resizable()
                         .scaledToFill()
                         .frame(maxWidth: .infinity)
                         .frame(height: imageHeight)
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                 } else {
                     ProgressView()
                         .frame(maxWidth: .infinity)
@@ -66,6 +66,26 @@ struct PhotoSummaryView: View {
                     }
                     Text(photo.ownerName ?? photo.ownerID.description)
                 }
+            }
+            if let tags = photo.tags, !tags.isEmpty {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(tags.components(separatedBy: " ").prefix(5), id: \.self) { tag in
+                            Text(tag)
+                                .frame(height: 30)
+                                .foregroundColor(.white)
+                                .padding(.horizontal)
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .fill(.teal)
+                                            .shadow(radius: 2)
+                                    }
+                                }
+                        }
+                    }
+                }
+                .scrollIndicators(.hidden)
             }
         }
     }

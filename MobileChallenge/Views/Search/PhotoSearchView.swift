@@ -32,9 +32,6 @@ struct PhotoSearchView: View {
             .navigationTitle("Search")
         }
         .searchable(text: $viewModel.searchTerm)
-        .onAppear {
-            viewModel.search()
-        }
         .onSubmit(of: .search, {
             viewModel.search()
         })

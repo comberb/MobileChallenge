@@ -22,14 +22,14 @@ struct PhotoDetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: .infinity)
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                         .padding()
                 } else if phase.error != nil {
                     Image(systemName: "photo")
                         .resizable()
                         .scaledToFill()
                         .frame(maxWidth: .infinity)
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                 } else {
                     ProgressView()
                         .frame(maxWidth: .infinity)
