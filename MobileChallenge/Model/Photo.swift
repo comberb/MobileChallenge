@@ -48,3 +48,5 @@ extension Photo: Decodable {
         case taken = "date_taken"
     }
 }
+
+extension Photo: Equatable {}

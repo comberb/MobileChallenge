@@ -11,7 +11,7 @@ import SwiftUI
 struct MobileChallengeApp: App {
     var body: some Scene {
         WindowGroup {
-            PhotoSearchView(networkingManager: FlickrManager())
+            PhotoSearchView(viewModel: PhotoSearchViewModel())
         }
     }
 }

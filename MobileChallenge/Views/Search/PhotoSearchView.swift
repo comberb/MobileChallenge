@@ -10,9 +10,7 @@ import SwiftUI
 struct PhotoSearchView: View {
     // MARK: Properties
     
-    @State private var photos: [Photo] = []
-    @State private var searchTerm = ""
-    let networkingManager: FlickrManager
+    @ObservedObject var viewModel: PhotoSearchViewModel
     
     // MARK: Body
     
@@ -20,7 +18,7 @@ struct PhotoSearchView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(photos) { photo in
+                    ForEach(viewModel.photos) { photo in
                         NavigationLink {
                             PhotoDetailView(photo: photo)
                         } label: {
@@ -33,16 +31,12 @@ struct PhotoSearchView: View {
             }
             .navigationTitle("Search")
         }
-        .searchable(text: $searchTerm)
-        .onAppear(perform: search)
-        .onSubmit(of: .search, search)
-    }
-    
-    // MARK: Methods
-    
-    func search() {
-        Task {
-            photos = await networkingManager.search(searchTerm)
+        .searchable(text: $viewModel.searchTerm)
+        .onAppear {
+            viewModel.search()
         }
+        .onSubmit(of: .search, {
+            viewModel.search()
+        })
     }
 }

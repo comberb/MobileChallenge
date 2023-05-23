@@ -9,6 +9,7 @@ import Foundation
 
 actor FlickrManager {
     // MARK: Structs
+    
     struct FlickrSearchResult: Decodable {
         let photos: PhotoCollection
     }
