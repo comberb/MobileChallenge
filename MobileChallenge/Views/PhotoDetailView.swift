@@ -11,6 +11,7 @@ struct PhotoDetailView: View {
     // MARK: Properties
     
     let photo: Photo
+    private let dateFormatter = DateFormatter()
     
     // MARK: Body
     
@@ -38,8 +39,14 @@ struct PhotoDetailView: View {
             Text(photo.title)
                 .font(.headline)
                 .padding(.horizontal)
-            if let taken = photo.taken {
-                Text(taken)
+            if let dateString = photo.date, let date = formattedDate(dateString) {
+                Text(date)
+                    .padding(.horizontal)
+                    .foregroundColor(.secondary)
+                    .italic()
+                
+                Divider()
+                    .padding(.vertical)
             }
             if let license = photo.license {
                 Text(license)
@@ -53,6 +60,15 @@ struct PhotoDetailView: View {
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func formattedDate(_ string: String) -> String? {
+        guard let double = Double(string), double > 0 else { return nil }
+        let date = Date(timeIntervalSince1970: double)
+        dateFormatter.timeStyle = DateFormatter.Style.medium
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeZone = .current
+        return dateFormatter.string(from: date)
     }
 }
 

@@ -18,7 +18,7 @@ struct Photo: Identifiable {
     let ownerName: String?
     let iconServer: String?
     let iconFarm: Int?
-    let taken: String?
+    let date: String?
     let license: String?
     let tags: String?
 //    let ispublic: Int
@@ -45,7 +45,7 @@ extension Photo: Decodable {
         case ownerName = "ownername"
         case iconServer = "iconserver"
         case iconFarm = "iconfarm"
-        case taken = "date_taken"
+        case date = "dateupload"
     }
 }
 
