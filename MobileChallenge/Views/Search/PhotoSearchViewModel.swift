@@ -11,7 +11,7 @@ final class PhotoSearchViewModel: ObservableObject {
     // MARK: Properties
     
     @Published var photos: [Photo] = []
-    @Published var searchTerm = ""
+    @Published var searchTerm = "Popular"
     
     // MARK: Dependencies
     

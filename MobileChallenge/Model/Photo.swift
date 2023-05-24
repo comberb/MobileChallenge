@@ -19,7 +19,6 @@ struct Photo: Identifiable {
     let iconServer: String?
     let iconFarm: Int?
     let date: String?
-    let license: String?
     let tags: String?
 //    let ispublic: Int
 //    let isfriend: Int
@@ -38,7 +37,6 @@ extension Photo: Decodable {
     enum CodingKeys: String, CodingKey {
         case id,
              title,
-             license,
              tags
         case ownerID = "owner"
         case url = "url_m"

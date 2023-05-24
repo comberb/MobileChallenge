@@ -12,28 +12,24 @@ struct UserPhotosView: View {
     
     @State private var photos: [Photo] = []
     let networkingManager: FlickrManager
-    let userID: String
-    let username: String
+    let photo: Photo
+    let iconHeight: CGFloat = 80
     
     // MARK: Body
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack {
-                    ForEach(photos) { photo in
-                        NavigationLink {
-                            PhotoDetailView(photo: photo)
-                        } label: {
-                            PhotoSummaryView(photo: photo, showUserInfo: false)
-                                .padding()
-                        }
+        ScrollView {
+            LazyVStack {
+                ForEach(photos) { photo in
+                    NavigationLink {
+                        PhotoDetailView(photo: photo)
+                    } label: {
+                        PhotoSummaryView(photo: photo, showUserInfo: false, tagTap: nil)
                     }
                 }
-                .listRowSeparator(.visible)
             }
-            .navigationTitle(username)
         }
+        .navigationTitle("Profile")
         .onAppear(perform: search)
     }
     
@@ -41,7 +37,7 @@ struct UserPhotosView: View {
     
     func search() {
         Task {
-            photos = await networkingManager.search(user: userID)
+            photos = await networkingManager.search(user: photo.ownerID)
         }
     }
 }

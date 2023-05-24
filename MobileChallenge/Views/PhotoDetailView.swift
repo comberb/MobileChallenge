@@ -16,47 +16,49 @@ struct PhotoDetailView: View {
     // MARK: Body
     
     var body: some View {
-        VStack(alignment: .leading) {
-            AsyncImage(url: photo.url) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(15)
-                        .padding()
-                } else if phase.error != nil {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(15)
-                } else {
-                    ProgressView()
-                        .frame(maxWidth: .infinity)
+        ScrollView {
+            VStack(alignment: .leading) {
+                AsyncImage(url: photo.url) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(15)
+                            .padding()
+                    } else if phase.error != nil {
+                        PlaceholderImageView()
+                    } else {
+                        ProgressView()
+                            .frame(maxWidth: .infinity)
+                    }
                 }
-            }
-            Text(photo.title)
-                .font(.headline)
-                .padding(.horizontal)
-            if let dateString = photo.date, let date = formattedDate(dateString) {
-                Text(date)
+                UserSummaryView(photo: photo)
+                    .padding(8)
+                Text(photo.title)
+                    .font(.headline)
                     .padding(.horizontal)
-                    .foregroundColor(.secondary)
-                    .italic()
-                
+                if let dateString = photo.date, let date = formattedDate(dateString) {
+                    Text(date)
+                        .foregroundColor(.secondary)
+                        .italic()
+                        .padding()
+                }
                 Divider()
-                    .padding(.vertical)
-            }
-            if let license = photo.license {
-                Text(license)
+                    .padding(.vertical, 8)
+                if let tags = photo.tags, !tags.isEmpty {
+                    VStack(alignment: .leading) {
+                        Text("Tags")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        ForEach(tags.components(separatedBy: " "), id: \.self) { tag in
+                            TagView(tag: tag)
+                        }
+                    }
                     .padding(.horizontal)
+                }
+                Spacer()
             }
-            if let tags = photo.tags {
-                Text(tags)
-                    .padding(.horizontal)
-            }
-            Spacer()
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)

@@ -22,12 +22,13 @@ struct PhotoSearchView: View {
                         NavigationLink {
                             PhotoDetailView(photo: photo)
                         } label: {
-                            PhotoSummaryView(photo: photo, showUserInfo: true)
-                                .padding()
+                            PhotoSummaryView(photo: photo, showUserInfo: true) { tag in
+                                viewModel.searchTerm = tag
+                                viewModel.search()
+                            }
                         }
                     }
                 }
-                .listRowSeparator(.visible)
             }
             .navigationTitle("Search")
         }
@@ -35,5 +36,8 @@ struct PhotoSearchView: View {
         .onSubmit(of: .search, {
             viewModel.search()
         })
+        .task {
+            viewModel.search()
+        }
     }
 }

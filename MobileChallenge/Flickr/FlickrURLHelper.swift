@@ -17,7 +17,7 @@ struct FlickrURLHelper {
     private func getSearchURLComponents(page: Int) -> URLComponents {
         var components = getBaseURL()
         components.queryItems?.append(.init(name: "method", value: "flickr.photos.search"))
-        components.queryItems?.append(.init(name: "extras", value: "url_m, owner_name, icon_server, license, tags, date_upload"))
+        components.queryItems?.append(.init(name: "extras", value: "url_m, owner_name, icon_server, tags, date_upload"))
         components.queryItems?.append(.init(name: "safe_search", value: "1"))
         components.queryItems?.append(.init(name: "page", value: page.description))
         components.queryItems?.append(.init(name: "per_page", value: "20"))
