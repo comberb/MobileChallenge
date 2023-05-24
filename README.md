@@ -10,4 +10,8 @@ I've used an MVVM design pattern to demonstrate some unit testing in this module
 
 3. Tapping on the photo should take the user to a separate page wherein they can see more detail about the photo.
 
+More details are displayed when tapping on a photo. This doesn't query for more info though - this would be a nice addition. Comments, for example, would be nice to see.
+
 4. Tapping on a user id/photo should produce a list of photos by that user.
+
+We can use the same search url with an extra parameter to make sure the photos returned all belong to the selected user. These are all displayed in a list, reusing the photo summary view that is used in the search module.

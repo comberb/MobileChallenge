@@ -19,7 +19,9 @@ struct UserPhotosView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(alignment: .leading) {
+                UserSummaryView(photo: photo)
+                
                 ForEach(photos) { photo in
                     NavigationLink {
                         PhotoDetailView(photo: photo)
