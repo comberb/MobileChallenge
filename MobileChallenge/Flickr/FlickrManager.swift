@@ -35,18 +35,16 @@ actor FlickrManager {
     private func getPhotos(fromURL url: URL) async -> [Photo] {
         do {
             let (data, _) = try await session.data(from: url, delegate: nil)
-            
-            do {
-                let decodedResponse = try JSONDecoder().decode(FlickrSearchResult.self, from: data)
-                return decodedResponse.photos.photo
-            } catch {
-                print("Something went wrong:", error)
-                return []
-            }
+            let result: FlickrSearchResult = try decode(data: data)
+            return result.photos.photo
         } catch {
             print("Invalid data:", error)
             return []
         }
+    }
+    
+    private func decode<T: Decodable>(data: Data) throws -> T {
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }
 
