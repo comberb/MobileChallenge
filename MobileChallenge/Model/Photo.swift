@@ -10,9 +10,6 @@ import Foundation
 struct Photo: Identifiable {
     let id: String
     let ownerID: String
-//    let secret: String
-//    let server: String
-//    let farm: Int
     let title: String
     let url: URL?
     let ownerName: String?
@@ -20,9 +17,6 @@ struct Photo: Identifiable {
     let iconFarm: Int?
     let date: String?
     let tags: String?
-//    let ispublic: Int
-//    let isfriend: Int
-//    let isfamily: Int
     
     var userIcon: URL? {
         guard iconFarm != 0 else {

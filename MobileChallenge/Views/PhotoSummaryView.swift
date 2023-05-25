@@ -10,9 +10,11 @@ import SwiftUI
 struct PhotoSummaryView: View {
     // MARK: Properties
     
-    let photo: Photo
     let imageHeight: CGFloat = 300
     
+    // MARK: Dependencies
+    
+    let photo: Photo
     let showUserInfo: Bool
     let tagTap: ((String) -> Void)?
     

@@ -10,8 +10,11 @@ import SwiftUI
 struct PhotoDetailView: View {
     // MARK: Properties
     
-    let photo: Photo
     private let dateFormatter = DateFormatter()
+    
+    // MARK: Dependencies
+    
+    let photo: Photo
     
     // MARK: Body
     
